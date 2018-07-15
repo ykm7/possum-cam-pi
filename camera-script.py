@@ -13,17 +13,15 @@ GPIO.setup(3, GPIO.OUT)  # LED output pin
 
 path = '/home/pi/motion_images/'
 
+def start_camera_system():
+    detect_motion()
+
 def detect_motion():
     while True:
         i = GPIO.input(11)
         if (i == 1):
             takeImage()
             time.sleep(10)
-
-
-def main():
-    detect_motion()
-
 
 def takeImage():
     global path
@@ -44,8 +42,7 @@ def takeImage():
         # to mode switching on the still port, this will take
         # longer than 6 seconds
         currentTime = time.asctime(time.localtime(time.time()))
-        camera.capture(str(currentTime) + ".jpg")
+        filename = path + str(currentTime) + ".jpg"
+        camera.capture(filename)
 
 
-if __name__ == "__main__":
-    main()
